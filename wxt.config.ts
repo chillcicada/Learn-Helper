@@ -1,5 +1,16 @@
+import { execSync } from 'node:child_process'
 import { defineConfig } from 'wxt'
 import react from '@vitejs/plugin-react'
+import Randomstring from 'randomstring'
+import { version as versionReact } from 'react'
+import { version as versionMui } from '@mui/material/package.json'
+import { version as helperVersion } from './package.json'
+// eslint-disable-next-line antfu/no-import-node-modules-by-path
+import { version as versionThuLearnLib } from './node_modules/thu-learn-lib/package.json'
+
+const randomSuffix = Randomstring.generate(4)
+const r = (cmd: string) => execSync(cmd).toString().trim()
+const j = JSON.stringify
 
 export default defineConfig({
   srcDir: 'src',
@@ -7,6 +18,22 @@ export default defineConfig({
   entrypointsDir: '../entry',
   publicDir: '../public',
   vite: () => ({
+    define: {
+      __HELPER_VERSION__: j(helperVersion),
+      __GIT_VERSION__: j(r('git describe --always --dirty')),
+      __THU_LEARN_LIB_VERSION__: j(versionThuLearnLib),
+      __MUI_VERSION__: j(versionMui),
+      __REACT_VERSION__: j(versionReact),
+
+      __GIT_COMMIT_HASH__: j(r('git rev-parse HEAD')),
+      __GIT_COMMIT_DATE__: j(r('git log -1 --date=format:"%Y/%m/%d %T" --format="%ad"')),
+      __GIT_BRANCH__: j(r('git rev-parse --abbrev-ref HEAD')),
+      __BUILD_HOSTNAME__: j(r('hostname')),
+      __BUILD_TIME__: j(`date + ${(new Date()).toLocaleString('zh-CN')}`),
+
+      __LEARN_HELPER_CSRF_TOKEN_PARAM__: j(`__learn-helper-csrf-token-${randomSuffix}__`),
+      __LEARN_HELPER_CSRF_TOKEN_INJECTOR__: j(`__learn_helper_csrf_token_injector_${randomSuffix}__`),
+    },
     plugins: [
       react(),
     ],
