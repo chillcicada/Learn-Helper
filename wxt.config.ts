@@ -34,7 +34,7 @@ export default defineConfig({
       __GIT_COMMIT_DATE__: j(r('git log -1 --date=format:"%Y/%m/%d %T" --format="%ad"')),
       __GIT_BRANCH__: j(r('git rev-parse --abbrev-ref HEAD')),
       __BUILD_HOSTNAME__: j(r('hostname')),
-      __BUILD_TIME__: j(`date + ${(new Date()).toLocaleString('zh-CN')}`),
+      __BUILD_TIME__: j((new Date()).toLocaleString('zh-CN')),
 
       __LEARN_HELPER_CSRF_TOKEN_PARAM__: j(`__learn-helper-csrf-token-${randomSuffix}__`),
       __LEARN_HELPER_CSRF_TOKEN_INJECTOR__: j(`__learn_helper_csrf_token_injector_${randomSuffix}__`),

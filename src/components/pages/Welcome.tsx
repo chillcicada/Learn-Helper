@@ -63,9 +63,11 @@ function Welcome() {
             {__GIT_VERSION__}
             {' '}
             (built on
+            {' '}
             {__BUILD_HOSTNAME__}
             {' '}
             at
+            {' '}
             {__BUILD_TIME__}
             )
             <br />
@@ -88,12 +90,15 @@ function Welcome() {
       </section>
       <footer className={styles.welcome_footer}>
         <p className={styles.welcome_copyright}>
-          &copy; 2013-2023
+          &copy; 2013-
+          {new Date().getFullYear()}
           {' '}
           <a href="mailto:xxr3376@gmail.com">UGeeker</a>
-&nbsp;BrianLi&nbsp;
+          {' '}
+          BrianLi
+          {' '}
           <a href="https://github.com/Harry-Chen">HarryChen</a>
-&nbsp;
+          {' '}
           <a href="https://github.com/AsakuraMizu">AsakuraMizu</a>
         </p>
       </footer>
