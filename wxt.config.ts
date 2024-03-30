@@ -1,7 +1,12 @@
 import { execSync } from 'node:child_process'
 import { defineConfig } from 'wxt'
-import react from '@vitejs/plugin-react'
+import { lingui } from '@lingui/vite-plugin'
+import react from '@vitejs/plugin-react-swc'
+import icons from 'unplugin-icons/vite'
 import Randomstring from 'randomstring'
+import mdx from '@mdx-js/rollup'
+import rehypeMdxImportMedia from 'rehype-mdx-import-media'
+import remarkUnwrapImages from 'remark-unwrap-images'
 import { version as versionReact } from 'react'
 import { version as versionMui } from '@mui/material/package.json'
 import { version as helperVersion } from './package.json'
@@ -35,7 +40,15 @@ export default defineConfig({
       __LEARN_HELPER_CSRF_TOKEN_INJECTOR__: j(`__learn_helper_csrf_token_injector_${randomSuffix}__`),
     },
     plugins: [
-      react(),
+      {
+        enforce: 'pre',
+        ...mdx({
+          remarkPlugins: [rehypeMdxImportMedia, remarkUnwrapImages],
+        }),
+      },
+      react({ plugins: [['@lingui/swc-plugin', {}]] }),
+      icons({ compiler: 'jsx', jsx: 'react' }),
+      lingui(),
     ],
   }),
   manifest: {
