@@ -1,0 +1,61 @@
+{
+  "name": "learn-helper",
+  "displayName": "Learn Helper",
+  "type": "module",
+  "version": "4.6.3",
+  "private": true,
+  "author": "Harry Chen",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Harry-Chen/Learn-Helper"
+  },
+  "scripts": {
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox",
+    "compile": "tsc --noEmit",
+    "postinstall": "wxt prepare",
+    "prepare": "npx simple-git-hooks",
+    "preinstall": "npx only-allow pnpm"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "thu-learn-lib": "3.1.4"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "2.11.5",
+    "@types/react": "18.2.73",
+    "@types/react-dom": "18.2.23",
+    "@vitejs/plugin-react": "4.2.1",
+    "eslint": "8.57.0",
+    "eslint-plugin-format": "0.1.0",
+    "lint-staged": "15.2.2",
+    "simple-git-hooks": "2.11.1",
+    "wxt": "0.17.10"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
+  },
+  "browserslist": {
+    "development": [
+      "last 1 Chrome version",
+      "last 1 Firefox version",
+      "last 1 Edge version"
+    ],
+    "production": [
+      "> 1%",
+      "last 2 versions",
+      "not dead",
+      "not op_mini all",
+      "not IE 11"
+    ]
+  }
+}
