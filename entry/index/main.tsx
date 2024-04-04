@@ -14,8 +14,7 @@ import App from '@/App'
 import '@/i18n'
 import '@/css/scrollbar.css'
 
-const root = createRoot(document.querySelector('#main')!)
-root.render(
+createRoot(document.querySelector('#main')!).render(
   <React.StrictMode>
     <Provider store={store}>
       <CssVarsProvider defaultMode="system" theme={theme}>

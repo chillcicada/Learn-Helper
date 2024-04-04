@@ -22,6 +22,7 @@ export default defineConfig({
   root: '.',
   entrypointsDir: '../entry',
   publicDir: '../public',
+
   vite: () => ({
     define: {
       __HELPER_VERSION__: j(helperVersion),
@@ -39,18 +40,32 @@ export default defineConfig({
       __LEARN_HELPER_CSRF_TOKEN_PARAM__: j(`__learn-helper-csrf-token-${randomSuffix}__`),
       __LEARN_HELPER_CSRF_TOKEN_INJECTOR__: j(`__learn_helper_csrf_token_injector_${randomSuffix}__`),
     },
+
     plugins: [
       {
         enforce: 'pre',
         ...mdx({
-          remarkPlugins: [rehypeMdxImportMedia, remarkUnwrapImages],
+          remarkPlugins: [remarkUnwrapImages],
+          rehypePlugins: [rehypeMdxImportMedia],
         }),
       },
       react({ plugins: [['@lingui/swc-plugin', {}]] }),
       icons({ compiler: 'jsx', jsx: 'react' }),
       lingui(),
     ],
+
+    build: {
+      minify: 'terser',
+      sourcemap: import.meta.env.MODE === 'development',
+      terserOptions: {
+        format: {
+          comments: false,
+          ecma: 2018,
+        },
+      },
+    },
   }),
+
   manifest: {
     name: '__MSG_appName__',
     description: '__MSG_appDesc__',
